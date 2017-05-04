@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+# ***************************************************************************** #
+#                                                                               #
+#                                                          :::      ::::::::    #
+#    filler_trainer.rb [ version 1.1 ]                   :+:      :+:    :+:    #
+#                                                      +:+ +:+         +:+      #
+#    By: jcatinea                                    +#+  +:+       +#+         #
+#                                                  +#+#+#+#+#+   +#+            #
+#    Created: 2016/12/15 14:37:26 by jcatinea           #+#    #+#              #
+#     Updated: 2016/12/16 15:02:05 by jcatinea         ###   ########.fr        #
+#                                                                               #
+# ***************************************************************************** #
+
+g_maps = ["maps/map00", "maps/map01", "maps/map02"]
+g_players = ["champely.filler", "abanlin.filler", "hcao.filler"]
+g_players += ["grati.filler", "carli.filler", "superjeannot.filler"]
+g_players.map! { |player| "players/" + player}
+
+require_relative 'filler_core.rb'
+
+player = ARGV[0]
+number = ARGV[1].to_i
+g_players.each { |challenger|
+	g_maps.each { |map|
+		i = 0
+		score = 0
+		while i < number do
+			result = fight(map, player, challenger)
+			score += 1 if result == 1
+			if result == -42
+				redo
+				$stdout.write("error")
+			end
+			i += 1
+		end
+		p_name = player.partition("players/")[2].partition(".filler")[0]
+		c_name = challenger.partition("players/")[2].partition(".filler")[0]
+		map_name = map.partition("maps/")[2]
+		string = p_name + " VS " + c_name + " on " + map_name + " "
+		string += score.to_s + " - " + (number - score).to_s + "\n"
+		$stdout.write(string)
+
+		i = 0
+		score = 0
+		while i < number do
+			result = fight(map, challenger, player)
+			score += 1 if result == 1
+			if result == -42
+				redo
+				$stdout.write("error")
+			end
+			i += 1
+		end
+		p_name = player.partition("players/")[2].partition(".filler")[0]
+		c_name = challenger.partition("players/")[2].partition(".filler")[0]
+		map_name = map.partition("maps/")[2]
+		string = c_name + " VS " + p_name + " on " + map_name + " "
+		string += score.to_s + " - " + (number - score).to_s + "\n"
+		$stdout.write(string)
+	}
+}

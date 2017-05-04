@@ -1,0 +1,21 @@
+#!/usr/bin/env ruby
+# ***************************************************************************** #
+#                                                                               #
+#                                                          :::      ::::::::    #
+#    filler_trainer.rb [ version 1.1 ]                   :+:      :+:    :+:    #
+#                                                      +:+ +:+         +:+      #
+#    By: jcatinea                                    +#+  +:+       +#+         #
+#                                                  +#+#+#+#+#+   +#+            #
+#    Created: 2016/12/15 14:37:26 by jcatinea           #+#    #+#              #
+#    Updated: 2016/12/15 14:37:26 by jcatinea          ###   ########.fr        #
+#                                                                               #
+# ***************************************************************************** #
+
+require_relative "filler_tournament_core.rb"
+
+player = ARGV[0]
+number = ARGV[1].to_i
+
+for i in 1..number
+	tournament(player, true)
+end
